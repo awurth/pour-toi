@@ -1,0 +1,28 @@
+# surprise-concert
+
+A single-page gift reveal: open the link, tap the button, the gift appears. One `index.html`, no dependency, no external request.
+
+## Edit the gift
+
+Every text lives in the `GIFT` object at the top of the `<script>` in `index.html`:
+
+| Key | Shown as |
+|---|---|
+| `reveal` | the big reveal sentence |
+| `message` | the personal message below it |
+| `concert`, `venue`, `date` | the details list |
+
+Open `index.html` in a browser to check the result.
+
+## Publish on GitHub Pages
+
+1. Create a repository with a neutral name (e.g. `pour-toi`): it shows in the URL.
+2. Push this repository to it:
+   ```bash
+   git remote add origin git@github.com:<user>/<repo>.git
+   git push -u origin main
+   ```
+3. In the repository: **Settings › Pages**, source *Deploy from a branch*, branch `main`, folder `/ (root)`, **Save**.
+4. After a minute or two the page is live at `https://<user>.github.io/<repo>/`.
+
+On a free GitHub plan, Pages needs a public repository: anyone browsing your profile can read the gift in the source. `noindex` keeps the page out of search engines only.
