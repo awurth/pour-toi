@@ -12,7 +12,8 @@ Every text lives in the `GIFT` object at the top of the `<script>` in `index.htm
 | `kind` | the line above the concert name |
 | `concert` | the big title of the reveal |
 | `tagline` | the line under the concert name |
-| `venue`, `date`, `category` | the details below it |
+| `note` | the personal line under the title |
+| `venue`, `date` | the details below it |
 
 Two files repeat part of it and must be updated by hand when the event changes:
 
