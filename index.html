@@ -416,9 +416,12 @@
         radial-gradient(circle 14px at 100% 0, transparent 98%, #000) right / 51% 100% no-repeat;
     }
     .ticket-main > * { animation: rise .9s cubic-bezier(.2, .7, .2, 1) both; }
-    .ticket-main > :nth-child(1) { animation-delay: .25s; }
-    .ticket-main > :nth-child(2) { animation-delay: .4s; }
-    .ticket-main > :nth-child(3) { animation-delay: 1s; }
+    .ticket-main > :nth-child(1) { animation-delay: .3s; }
+    .ticket-main > :nth-child(2) { animation-delay: .9s; }
+    .reveal > .eyebrow {
+      margin: 0 0 .75rem;
+      animation: rise .9s cubic-bezier(.2, .7, .2, 1) both;
+    }
     .ticket-stub > * { animation: rise .9s cubic-bezier(.2, .7, .2, 1) 1.2s both; }
     .reveal > .actions { animation: rise .9s cubic-bezier(.2, .7, .2, 1) 1.45s both; }
 
@@ -430,7 +433,7 @@
       text-transform: uppercase;
     }
     .reveal h2 {
-      margin: .75rem 0 .25rem;
+      margin: 0 0 .25rem;
       font-size: clamp(1.75rem, 8vw, 2.6rem);
       font-weight: 600;
       line-height: 1.2;
@@ -579,9 +582,9 @@
     <button class="btn btn-primary" id="open" type="button">Ouvrir mon cadeau</button>
 
     <section class="reveal" id="reveal" aria-labelledby="reveal-title" hidden>
+      <p class="ornament eyebrow">Ton cadeau</p>
       <div class="ticket">
         <div class="ticket-main">
-          <p class="ornament eyebrow">Ton cadeau</p>
           <h2 id="reveal-title" tabindex="-1">
             <span class="kind" data-gift="kind"></span>
             <span class="metal" data-gift="concert"></span>
