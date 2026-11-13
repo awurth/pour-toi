@@ -17,6 +17,12 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
   <style>
+    @property --s {
+      syntax: "<length>";
+      inherits: true;
+      initial-value: 0px;
+    }
+
     :root {
       --night: #05070f;
       --navy: #0b1430;
@@ -95,7 +101,9 @@
       min-height: 100dvh;
       max-width: 34rem;
       margin: 0 auto;
-      padding: 2.5rem 1rem;
+      padding: 1.5rem 1rem 2.5rem;
+      overflow-x: hidden;
+      overflow-x: clip;
       text-align: center;
     }
 
@@ -117,6 +125,10 @@
     .subtitle {
       margin: 0;
       font-size: clamp(1.15rem, 5vw, 1.45rem);
+    }
+    .gift-icon {
+      vertical-align: -.12em;
+      color: var(--gold);
     }
 
     .ornament {
@@ -144,6 +156,31 @@
       height: var(--s);
       margin: 2.25rem auto 2.5rem;
       isolation: isolate;
+      transition: --s .8s cubic-bezier(.2, .7, .2, 1), margin .8s cubic-bezier(.2, .7, .2, 1);
+    }
+    main:has(.reveal:not([hidden])) .gift {
+      --s: min(32vw, 8.5rem);
+      margin: 1.25rem auto 1.75rem;
+    }
+    .rays {
+      position: absolute;
+      left: -100%;
+      top: -112%;
+      width: 300%;
+      height: 300%;
+      z-index: -1;
+      pointer-events: none;
+      background: repeating-conic-gradient(rgba(246, 221, 150, .34) 0deg 6deg, transparent 6deg 18deg);
+      -webkit-mask: radial-gradient(closest-side, #000 12%, transparent 80%);
+      mask: radial-gradient(closest-side, #000 12%, transparent 80%);
+      opacity: 0;
+      scale: .3;
+      transition: opacity .8s .15s, scale 1.2s cubic-bezier(.2, .7, .2, 1) .15s;
+    }
+    .open .rays {
+      opacity: 1;
+      scale: 1;
+      animation: spin 50s linear infinite;
     }
     .gift::before {
       content: "";
@@ -417,6 +454,7 @@
     }
 
     @keyframes stars { from { opacity: .45; } }
+    @keyframes spin { to { rotate: 360deg; } }
     @keyframes beams { from { opacity: .5; } }
     @keyframes halo { to { opacity: .55; transform: scale(.92); } }
     @keyframes float { 50% { transform: translateY(-7px); } }
@@ -451,9 +489,10 @@
   <main id="main" hidden>
     <h1 class="metal" data-gift="greeting"></h1>
     <p class="ornament" aria-hidden="true">✦</p>
-    <p class="subtitle">Tu as reçu un cadeau&nbsp;<span aria-hidden="true">🎁</span></p>
+    <p class="subtitle">Tu as reçu un cadeau&nbsp;<svg class="gift-icon" viewBox="0 0 24 24" width="1.1em" height="1.1em" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="9" width="17" height="4" rx="1"/><path d="M5 13v7.5h14V13M12 9v11.5"/><path d="M12 9C10.5 6 7 5 6.5 7S9 9 12 9Zm0 0c1.5-3 5-4 5.5-2S15 9 12 9Z"/></svg></p>
 
     <div class="gift" id="gift" aria-hidden="true">
+      <span class="rays"></span>
       <span class="spark" style="--x: -4%; --y: 6%; --z: .1; --d: 0s">✦</span>
       <span class="spark" style="--x: 92%; --y: 0%; --z: .07; --d: .9s">✦</span>
       <span class="spark" style="--x: -12%; --y: 58%; --z: .06; --d: 1.6s">✦</span>
