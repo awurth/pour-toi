@@ -1,4 +1,4 @@
-# surprise-concert
+# pour-toi
 
 A single-page gift reveal: open the link, tap the button, the gift appears. One `index.html`, no dependency, no external request.
 
@@ -8,9 +8,10 @@ Every text lives in the `GIFT` object at the top of the `<script>` in `index.htm
 
 | Key | Shown as |
 |---|---|
-| `reveal` | the big reveal sentence |
-| `message` | the personal message below it |
-| `concert`, `venue`, `date` | the details list |
+| `greeting` | the title of the opening screen |
+| `kind` | the line above the concert name |
+| `concert` | the big title of the reveal |
+| `venue`, `date` | the details below it |
 
 Open `index.html` in a browser to check the result.
 
