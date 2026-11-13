@@ -373,7 +373,7 @@
       color: var(--gold);
       background: none;
       cursor: pointer;
-      animation: rise .9s cubic-bezier(.2, .7, .2, 1) 1.9s both;
+      animation: rise .9s cubic-bezier(.2, .7, .2, 1) 1.7s both;
     }
     .replay:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
 
@@ -383,24 +383,44 @@
       .replay:hover { color: var(--gold-light); text-decoration: underline; text-underline-offset: .2em; }
     }
 
-    .card {
-      padding: 1.5rem 1.25rem;
-      border: 1px solid rgba(227, 192, 107, .5);
-      border-radius: 4px;
-      background: linear-gradient(rgba(22, 34, 80, .72), rgba(8, 12, 30, .78));
-      box-shadow:
-        inset 0 0 0 5px rgba(5, 7, 15, .55),
-        inset 0 0 0 6px rgba(227, 192, 107, .28),
-        0 1.5rem 3rem rgba(0, 0, 0, .5);
+    /* The drop shadow sits on the wrapper: a mask on the same element would clip it. */
+    .ticket {
+      filter: drop-shadow(0 1rem 1.5rem rgba(0, 0, 0, .55));
       animation: card-in .8s cubic-bezier(.2, .7, .2, 1) both;
     }
-    .card > * { animation: rise .9s cubic-bezier(.2, .7, .2, 1) both; }
-    .card > :nth-child(1) { animation-delay: .25s; }
-    .card > :nth-child(2) { animation-delay: .4s; }
-    .card > :nth-child(3) { animation-delay: 1s; }
-    .card > :nth-child(4) { animation-delay: 1.25s; }
-    .card > :nth-child(5) { animation-delay: 1.4s; }
-    .card > :nth-child(6) { animation-delay: 1.6s; }
+    .ticket-main {
+      padding: 1.5rem 1.25rem 1.4rem;
+      border: 1px solid rgba(227, 192, 107, .55);
+      border-bottom: 0;
+      border-radius: 12px 12px 0 0;
+      background: linear-gradient(160deg, rgba(32, 48, 108, .96), rgba(10, 16, 40, .96));
+      -webkit-mask:
+        radial-gradient(circle 14px at 0 100%, transparent 98%, #000) left / 51% 100% no-repeat,
+        radial-gradient(circle 14px at 100% 100%, transparent 98%, #000) right / 51% 100% no-repeat;
+      mask:
+        radial-gradient(circle 14px at 0 100%, transparent 98%, #000) left / 51% 100% no-repeat,
+        radial-gradient(circle 14px at 100% 100%, transparent 98%, #000) right / 51% 100% no-repeat;
+    }
+    .ticket-stub {
+      padding: 1.25rem 1.25rem 1.1rem;
+      border-radius: 0 0 12px 12px;
+      color: var(--ink);
+      background:
+        radial-gradient(circle, rgba(5, 7, 15, .85) 1.3px, transparent 1.8px) 0 1px / 8px 6px repeat-x,
+        linear-gradient(135deg, #f4e7c4, #e5cf98 50%, #cfb27c);
+      -webkit-mask:
+        radial-gradient(circle 14px at 0 0, transparent 98%, #000) left / 51% 100% no-repeat,
+        radial-gradient(circle 14px at 100% 0, transparent 98%, #000) right / 51% 100% no-repeat;
+      mask:
+        radial-gradient(circle 14px at 0 0, transparent 98%, #000) left / 51% 100% no-repeat,
+        radial-gradient(circle 14px at 100% 0, transparent 98%, #000) right / 51% 100% no-repeat;
+    }
+    .ticket-main > * { animation: rise .9s cubic-bezier(.2, .7, .2, 1) both; }
+    .ticket-main > :nth-child(1) { animation-delay: .25s; }
+    .ticket-main > :nth-child(2) { animation-delay: .4s; }
+    .ticket-main > :nth-child(3) { animation-delay: 1s; }
+    .ticket-stub > * { animation: rise .9s cubic-bezier(.2, .7, .2, 1) 1.2s both; }
+    .reveal > .actions { animation: rise .9s cubic-bezier(.2, .7, .2, 1) 1.45s both; }
 
     .eyebrow {
       margin: 0;
@@ -439,20 +459,34 @@
       font-style: italic;
       color: var(--gold-light);
     }
-    .note + .ornament { margin: .6rem 0; }
     .details {
       display: grid;
-      gap: .75rem;
+      grid-template-columns: 1fr 1fr;
       margin: 0;
     }
+    .details > div { padding: 0 .5rem; }
+    .details > div + div { border-left: 1px solid rgba(26, 18, 4, .3); }
     .details dt {
-      font-size: .78rem;
-      letter-spacing: .25em;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .22em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: #4a360b;
     }
-    .details dd { margin: .1rem 0 0; font-size: 1.1rem; }
+    .details dd { margin: .2rem 0 0; font-size: 1.02rem; line-height: 1.3; }
     .details dd::first-letter { text-transform: uppercase; }
+    .stamp {
+      display: inline-block;
+      margin: .9rem 0 0;
+      padding: .2rem .7rem;
+      border: 1.5px solid rgba(26, 18, 4, .7);
+      border-radius: 4px;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      rotate: -3deg;
+    }
 
     .dust {
       position: fixed;
@@ -545,29 +579,33 @@
     <button class="btn btn-primary" id="open" type="button">Ouvrir mon cadeau</button>
 
     <section class="reveal" id="reveal" aria-labelledby="reveal-title" hidden>
-      <div class="card">
-        <p class="ornament eyebrow">Ton cadeau</p>
-        <h2 id="reveal-title" tabindex="-1">
-          <span class="kind" data-gift="kind"></span>
-          <span class="metal" data-gift="concert"></span>
-          <span class="tagline" data-gift="tagline"></span>
-        </h2>
-        <p class="note" data-gift="note"></p>
-        <p class="ornament" aria-hidden="true">✦</p>
-        <dl class="details">
-          <div><dt>Lieu</dt><dd data-gift="venue"></dd></div>
-          <div><dt>Date</dt><dd data-gift="date"></dd></div>
-        </dl>
-        <div class="actions">
-          <a class="btn btn-ghost" href="rendez-vous.ics" aria-label="Ajouter au calendrier">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
-            Calendrier
-          </a>
-          <a class="btn btn-ghost" id="map-link" target="_blank" rel="noreferrer" aria-label="Voir l’itinéraire (nouvel onglet)">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>
-            Itinéraire
-          </a>
+      <div class="ticket">
+        <div class="ticket-main">
+          <p class="ornament eyebrow">Ton cadeau</p>
+          <h2 id="reveal-title" tabindex="-1">
+            <span class="kind" data-gift="kind"></span>
+            <span class="metal" data-gift="concert"></span>
+            <span class="tagline" data-gift="tagline"></span>
+          </h2>
+          <p class="note" data-gift="note"></p>
         </div>
+        <div class="ticket-stub">
+          <dl class="details">
+            <div><dt>Lieu</dt><dd data-gift="venue"></dd></div>
+            <div><dt>Date</dt><dd data-gift="date"></dd></div>
+          </dl>
+          <p class="stamp">Bon pour une entrée</p>
+        </div>
+      </div>
+      <div class="actions">
+        <a class="btn btn-ghost" href="rendez-vous.ics" aria-label="Ajouter au calendrier">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+          Calendrier
+        </a>
+        <a class="btn btn-ghost" id="map-link" target="_blank" rel="noreferrer" aria-label="Voir l’itinéraire (nouvel onglet)">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>
+          Itinéraire
+        </a>
       </div>
       <button class="replay" id="replay" type="button">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6L3.5 8.5"/><path d="M3.5 3.5v5h5"/></svg>
