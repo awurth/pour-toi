@@ -11,9 +11,14 @@ Every text lives in the `GIFT` object at the top of the `<script>` in `index.htm
 | `greeting` | the title of the opening screen |
 | `kind` | the line above the concert name |
 | `concert` | the big title of the reveal |
-| `venue`, `date` | the details below it |
+| `tagline` | the line under the concert name |
+| `venue`, `date`, `category` | the details below it |
 
-Open `index.html` in a browser to check the result.
+## Link
+
+The page only shows up when the URL carries the token set in `ACCESS_TOKEN`: `index.html?t=<token>`. Without it, visitors get a neutral "link is incomplete" message. This only keeps casual visitors out: the content stays readable in the source.
+
+To check the page locally, open `index.html?t=<token>` in a browser.
 
 ## Publish on GitHub Pages
 

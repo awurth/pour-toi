@@ -39,6 +39,12 @@
       -webkit-text-size-adjust: 100%;
     }
 
+    .locked {
+      margin: 0;
+      padding: 40vh 1rem 0;
+      text-align: center;
+    }
+
     main {
       max-width: 34rem;
       margin: 0 auto;
@@ -207,6 +213,14 @@
       font-weight: 400;
       color: var(--gold-light);
     }
+    .tagline {
+      display: block;
+      margin-top: .6rem;
+      font-size: clamp(1.05rem, 4.6vw, 1.3rem);
+      font-weight: 400;
+      letter-spacing: .03em;
+      color: var(--gold);
+    }
     .details {
       display: grid;
       gap: .75rem;
@@ -253,7 +267,9 @@
 <body>
   <canvas id="confetti" aria-hidden="true"></canvas>
 
-  <main>
+  <p class="locked" id="locked" hidden>Ce lien est incomplet.</p>
+
+  <main id="main" hidden>
     <h1 data-gift="greeting"></h1>
     <p class="subtitle">Tu as reçu un cadeau&nbsp;<span aria-hidden="true">🎁</span></p>
 
@@ -269,10 +285,12 @@
       <h2 id="reveal-title" tabindex="-1">
         <span class="kind" data-gift="kind"></span>
         <span data-gift="concert"></span>
+        <span class="tagline" data-gift="tagline"></span>
       </h2>
       <dl class="details">
         <div><dt>Lieu</dt><dd data-gift="venue"></dd></div>
         <div><dt>Date</dt><dd data-gift="date"></dd></div>
+        <div><dt>Catégorie</dt><dd data-gift="category"></dd></div>
       </dl>
       <button class="btn btn-ghost" id="replay" type="button">Rejouer l’animation</button>
     </section>
@@ -283,9 +301,16 @@
       greeting: 'Joyeux anniversaire !',
       kind: 'Une place de concert',
       concert: 'The Music of Hans Zimmer & Others',
+      tagline: 'A Celebration of Film Music',
       venue: 'Le Zornhoff, Monswiller',
       date: 'samedi 3 avril 2027 à 20h00',
+      category: 'Carré Or',
     };
+
+    // shortcut: hides the page from casual visitors only, the content stays readable in the source; encrypt GIFT if that ever matters.
+    const ACCESS_TOKEN = '08eb163c7aed6058';
+    const hasToken = new URLSearchParams(location.search).get('t') === ACCESS_TOKEN;
+    document.getElementById(hasToken ? 'main' : 'locked').hidden = false;
 
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
     const wait = ms => new Promise(resolve => setTimeout(resolve, reduceMotion.matches ? 0 : ms));
