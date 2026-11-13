@@ -444,6 +444,27 @@
     .details dd { margin: .1rem 0 0; font-size: 1.1rem; }
     .details dd::first-letter { text-transform: uppercase; }
 
+    .dust {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.5s;
+    }
+    .dust span {
+      position: absolute;
+      top: -12px;
+      left: var(--x);
+      width: var(--size);
+      height: var(--size);
+      border-radius: 50%;
+      background: var(--gold-light);
+      box-shadow: 0 0 6px 1px rgba(246, 221, 150, .7);
+    }
+    body:has(.reveal:not([hidden])) .dust { opacity: 1; }
+    body:has(.reveal:not([hidden])) .dust span { animation: fall var(--t) linear var(--d) infinite both; }
+
     #confetti {
       position: fixed;
       inset: 0;
@@ -455,6 +476,13 @@
 
     @keyframes stars { from { opacity: .45; } }
     @keyframes spin { to { rotate: 360deg; } }
+    @keyframes fall {
+      0% { opacity: 0; transform: translate(0, 0); }
+      10% { opacity: 1; }
+      50% { transform: translate(var(--sway), 55vh); }
+      85% { opacity: 1; }
+      100% { opacity: 0; transform: translate(0, calc(100vh + 24px)); }
+    }
     @keyframes beams { from { opacity: .5; } }
     @keyframes halo { to { opacity: .55; transform: scale(.92); } }
     @keyframes float { 50% { transform: translateY(-7px); } }
@@ -483,6 +511,7 @@
 </head>
 <body>
   <canvas id="confetti" aria-hidden="true"></canvas>
+  <div class="dust" id="dust" aria-hidden="true"></div>
 
   <p class="locked" id="locked" hidden>Ce lien est incomplet.</p>
 
@@ -561,6 +590,14 @@
     const openButton = document.getElementById('open');
     const reveal = document.getElementById('reveal');
     const revealTitle = document.getElementById('reveal-title');
+
+    const DUST_COUNT = 14;
+    for (let i = 0; i < DUST_COUNT; i++) {
+      const speck = document.createElement('span');
+      speck.style.cssText = `--x: ${(i + Math.random()) * 100 / DUST_COUNT}%; --size: ${2 + Math.random() * 2.5}px;`
+        + ` --t: ${9 + Math.random() * 6}s; --d: ${Math.random() * 8}s; --sway: ${(Math.random() - 0.5) * 36}px`;
+      document.getElementById('dust').append(speck);
+    }
 
     // French typography: a non-breaking space keeps "?" or "!" from wrapping alone onto the next line.
     for (const el of document.querySelectorAll('[data-gift]')) {
