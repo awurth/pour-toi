@@ -6,7 +6,16 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#05070f">
   <title>Une surprise pour toi</title>
-  <link rel="icon" href="data:,">
+  <meta name="description" content="Clique pour découvrir ta surprise.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Une surprise pour toi">
+  <meta property="og:description" content="Clique pour découvrir ta surprise.">
+  <meta property="og:image" content="https://awurth.github.io/pour-toi/preview.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Un coffret cadeau doré">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
   <style>
     :root {
       --night: #05070f;
@@ -254,13 +263,16 @@
     .open .box::after { opacity: 1; }
 
     .btn {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
       max-width: 22rem;
       margin: 0 auto;
       border-radius: 999px;
       font: inherit;
       font-weight: 600;
+      text-decoration: none;
       cursor: pointer;
     }
     .btn:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
@@ -320,7 +332,8 @@
     .card > :nth-child(2) { animation-delay: .4s; }
     .card > :nth-child(3) { animation-delay: 1.1s; }
     .card > :nth-child(4) { animation-delay: 1.25s; }
-    .reveal .btn-ghost { animation: rise .9s cubic-bezier(.2, .7, .2, 1) 1.7s both; }
+    .card > :nth-child(5) { animation-delay: 1.45s; }
+    .reveal > .btn-ghost { animation: rise .9s cubic-bezier(.2, .7, .2, 1) 1.8s both; }
 
     .eyebrow {
       margin: 0;
@@ -439,6 +452,7 @@
           <div><dt>Date</dt><dd data-gift="date"></dd></div>
           <div><dt>Catégorie</dt><dd data-gift="category"></dd></div>
         </dl>
+        <a class="btn btn-ghost" href="rendez-vous.ics">Ajouter au calendrier</a>
       </div>
       <button class="btn btn-ghost" id="replay" type="button">Rejouer l’animation</button>
     </section>
@@ -446,7 +460,7 @@
 
   <script>
     const GIFT = {
-      greeting: 'Joyeux anniversaire !',
+      greeting: 'Joyeux anniversaire, maman !',
       kind: 'Une place de concert',
       concert: 'The Music of Hans Zimmer & Others',
       tagline: 'A Celebration of Film Music',

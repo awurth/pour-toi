@@ -1,6 +1,6 @@
 # pour-toi
 
-A single-page gift reveal: open the link, tap the button, the gift appears. One `index.html`, no dependency, no external request.
+A single-page gift reveal: open the link, tap the button, the gift appears. Static files, no dependency, no external request.
 
 ## Edit the gift
 
@@ -13,6 +13,11 @@ Every text lives in the `GIFT` object at the top of the `<script>` in `index.htm
 | `concert` | the big title of the reveal |
 | `tagline` | the line under the concert name |
 | `venue`, `date`, `category` | the details below it |
+
+Two files repeat part of it and must be updated by hand when the event changes:
+
+- `rendez-vous.ics`: the calendar event behind the "Ajouter au calendrier" button (times in UTC).
+- `preview.jpg`: the image shown in link previews (WhatsApp, iMessage…), a 1200×630 capture of the opening screen. Its absolute URL is in the `og:image` meta tag: update it if the repository is renamed.
 
 ## Link
 
