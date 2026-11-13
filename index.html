@@ -383,15 +383,19 @@
       .replay:hover { color: var(--gold-light); text-decoration: underline; text-underline-offset: .2em; }
     }
 
-    /* The drop shadow sits on the wrapper: a mask on the same element would clip it. */
+    /* Outline and shadow sit on the wrapper, since a mask on the same element would clip them.
+       The four 1px drop-shadows trace the notched silhouette, which a border cannot follow. */
     .ticket {
-      filter: drop-shadow(0 1rem 1.5rem rgba(0, 0, 0, .55));
+      filter:
+        drop-shadow(1px 0 0 rgba(240, 214, 150, .5))
+        drop-shadow(-1px 0 0 rgba(240, 214, 150, .5))
+        drop-shadow(0 1px 0 rgba(240, 214, 150, .5))
+        drop-shadow(0 -1px 0 rgba(240, 214, 150, .5))
+        drop-shadow(0 1rem 1.5rem rgba(0, 0, 0, .55));
       animation: card-in .8s cubic-bezier(.2, .7, .2, 1) both;
     }
     .ticket-main {
       padding: 1.5rem 1.25rem 1.4rem;
-      border: 1px solid rgba(227, 192, 107, .55);
-      border-bottom: 0;
       border-radius: 12px 12px 0 0;
       background: linear-gradient(160deg, rgba(32, 48, 108, .96), rgba(10, 16, 40, .96));
       -webkit-mask:
